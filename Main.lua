@@ -26,7 +26,10 @@ local function teleportToEgg(eggName)
     local model = EggsFolder:FindFirstChild(eggName)
     local hrp = Player.Character and Player.Character:FindFirstChild("HumanoidRootPart")
     if model and model:FindFirstChild("Egg") and hrp then
-        TweenService:Create(hrp, TweenInfo.new(0.4), {CFrame = model.Egg.CFrame}):Play()
+        local target = model.Egg.PrimaryPart or model.Egg:FindFirstChildWhichIsA("BasePart")
+    if target then
+    TweenService:Create(hrp, TweenInfo.new(0.4), {CFrame = target.CFrame}):Play()
+end
     end
 end
 
