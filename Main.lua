@@ -23,15 +23,16 @@ local function getPriorityQuestEgg()
 end
 
 local function teleportToEgg(eggName)
-    local model = EggsFolder:FindFirstChild(eggName)
-    local hrp = Player.Character and Player.Character:FindFirstChild("HumanoidRootPart")
-    if model and model:FindFirstChild("Egg") and hrp then
-        local target = model.Egg.PrimaryPart or model.Egg:FindFirstChildWhichIsA("BasePart")
-    if target then
-    TweenService:Create(hrp, TweenInfo.new(0.4), {CFrame = target.CFrame}):Play()
+	local model = workspace.Eggs:FindFirstChild(eggName)
+	local hrp = Player.Character and Player.Character:FindFirstChild("HumanoidRootPart")
+	if model and model:FindFirstChild("Egg") and hrp then
+		local viewPart = model.Egg:FindFirstChild("View")
+		if viewPart then
+			TweenService:Create(hrp, TweenInfo.new(0.4), {CFrame = viewPart.CFrame + Vector3.new(0, 3, 0)}):Play()
+		end
+	end
 end
-    end
-end
+
 
 local function hatchEgg(eggName)
     game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events"):WaitForChild("BuyEgg"):FireServer(eggName, "Max")
